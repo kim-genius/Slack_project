@@ -1,9 +1,15 @@
-import React from 'react'
-
+import React from 'react';
+import {Routes,Route} from 'react-router-dom';
+import Login from '@pages/Login';
+import SignUp from '@pages/SignUp';
 const App = () => {
   return (
     <div>
-      이거 맞냐
+    <Routes>
+        <Route path='/'element='/login'/>
+        <Route path ='/login' element={<Login/>}/>
+        <Route path ='/signup' element={<SignUp/>}/>  
+    </Routes>
     </div>
   )
 }
