@@ -1,12 +1,15 @@
 import React from 'react';
 import {Routes,Route} from 'react-router-dom';
-import Login from '@pages/Login';
-import SignUp from '@pages/SignUp';
+import loadable from '@loadable/component';
+
+const Login = loadable(()=> import('@pages/Login'))
+const SignUp = loadable(()=> import('@pages/SignUp'))
+
 const App = () => {
   return (
     <div>
     <Routes>
-        <Route path='/'element='/login'/>
+        <Route path='/'element={<Login/>}/>
         <Route path ='/login' element={<Login/>}/>
         <Route path ='/signup' element={<SignUp/>}/>  
     </Routes>
