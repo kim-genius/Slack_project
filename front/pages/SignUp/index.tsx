@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import {Form,Label,Input,LinkContainer,Button,Header,Error,Success} from './styles';
 import useinput from '@hooks/useInput';
 import axios from 'axios';
+import useSWR from 'swr';
+import fetcher from '@utils/fetcher';
+import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
+  const navigate = useNavigate()
+  const {data,error,mutate} =  useSWR('http://localhost:3095/api/users',fetcher)
   const [email, onChangeEmail,setEmail] = useinput(''); 
   const [nickname, onChangeNickname,setNickname] = useinput('');
   const [password,setPassword] = useState('');
@@ -53,6 +58,12 @@ const SignUp = () => {
       .catch((err)=>{console.log(err.response),setSignUpError(err.response.data)})
     }
   },[email,password,nickname,passwordCheck,mismatchError])
+
+
+  if(data){
+    navigate('/')
+
+  }
   return (
     <div id="container">
       <Header>Sleact</Header>
