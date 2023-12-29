@@ -26,8 +26,8 @@ const LogIn = () => {
             withCredentials: true,
           },
         )
-        .then((res) => {
-          mutate(res.data,{revalidate : false}); //revalidate 가 true 면  optimistic ui 가 된다. 낙관적인 ui 좋아요 누르고 이후 서버에 데이터 확인.
+        .then(() => {
+          mutate();
         })
         .catch((error) => {
           console.dir(error);

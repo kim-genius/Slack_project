@@ -4,7 +4,6 @@ import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import { revalidateEvents } from 'swr/_internal'
 
 const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
   const navigate = useNavigate()
@@ -14,7 +13,7 @@ const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
             axios.post('http://localhost:3095/api/users/logout',null,{
                 withCredentials:true,
             })
-            .then((res)=>{mutate(res.data,{revalidate : false})})
+            .then(()=>{mutate()})
 
     },[])
   if(!data){
