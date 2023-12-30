@@ -34,6 +34,8 @@
 
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
 
+    "@types/gravatar": "^1.8.6",
+
     "@types/loadable__component": "^5.13.8",
 
     "@types/react": "^18.2.45",
@@ -43,6 +45,8 @@
     "axios": "^1.6.3",
 
     "cross-env": "^7.0.3",
+
+    "gravatar": "^1.8.2",
 
     "react": "^18.2.0",
 
@@ -107,3 +111,4 @@
   }
 
 }
+

@@ -3,7 +3,9 @@ import { useCallback } from 'react'
 import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
 import axios from 'axios'
+import { Header, ProfileImg, RightMenu, WorkspaceWrapper,Workspaces } from '@layouts/Workspace/styles'
 import { useNavigate } from 'react-router'
+import gravatar from 'gravatar'
 
 const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
   const navigate = useNavigate()
@@ -21,8 +23,19 @@ const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
 
   }
   return (
-    <div>
+    <div> 
+        <Header>
+            <RightMenu>
+                <span>
+              {data &&  <ProfileImg src={gravatar.url(data.email,{s:'20px',d:'retro'})} alt={data.email}>  
+                </ProfileImg>}
+                </span>
+                </RightMenu>
+        </Header>
     <button onClick ={onLogout}>로그아웃</button>
+    <WorkspaceWrapper>
+        <Workspaces></Workspaces>
+    </WorkspaceWrapper>
     {children}
     </div>
   )
