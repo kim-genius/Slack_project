@@ -3,9 +3,10 @@ import { useCallback } from 'react'
 import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
 import axios from 'axios'
-import { Header, ProfileImg, RightMenu, WorkspaceWrapper,Workspaces } from '@layouts/Workspace/styles'
+import { Channels, Chats, Header, MenuScroll, ProfileImg, RightMenu, WorkspaceName, WorkspaceWrapper,Workspaces } from '@layouts/Workspace/styles'
 import { useNavigate } from 'react-router'
 import gravatar from 'gravatar'
+
 
 const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
   const navigate = useNavigate()
@@ -34,7 +35,14 @@ const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
         </Header>
     <button onClick ={onLogout}>로그아웃</button>
     <WorkspaceWrapper>
-        <Workspaces></Workspaces>
+        <Workspaces>test</Workspaces>
+        <Channels>
+            <WorkspaceName>sleact</WorkspaceName>
+            <MenuScroll>
+                menuscroll
+            </MenuScroll>
+        </Channels>
+        <Chats>chats</Chats>
     </WorkspaceWrapper>
     {children}
     </div>
