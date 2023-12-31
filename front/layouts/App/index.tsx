@@ -5,7 +5,8 @@ import loadable from '@loadable/component';
 const Login = loadable(()=> import('@pages/Login'))
 const SignUp = loadable(()=> import('@pages/SignUp'))
 const Workspace = loadable(()=> import('@layouts/Workspace'))
-
+const Channel = loadable(()=>import('@pages/Channel'))
+const DirectMessage = loadable(()=>import('@pages/DirectMessage'))
 
 const App = () => {
   return (
@@ -14,8 +15,10 @@ const App = () => {
         <Route path='/'element={<Login/>}/>
         <Route path ='/login' element={<Login/>}/>
         <Route path ='/signup' element={<SignUp/>}/>  
-        <Route path ='/workspace/*' element ={<Workspace/>}></Route>
-
+        <Route path ='/workspace' element ={<Workspace/>}>
+          <Route path="/workspace/channel" element={<Channel></Channel>}></Route>
+          <Route path="/workspace/dm" element={<DirectMessage></DirectMessage>}></Route>
+        </Route>
     </Routes>
     </div>
   )
