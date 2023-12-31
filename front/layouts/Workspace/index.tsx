@@ -1,11 +1,14 @@
-import React, { FC } from 'react'
-import { useCallback } from 'react'
+import React, { FC ,useCallback} from 'react'
 import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
 import axios from 'axios'
 import { Channels, Chats, Header, MenuScroll, ProfileImg, RightMenu, WorkspaceName, WorkspaceWrapper,Workspaces } from '@layouts/Workspace/styles'
-import { useNavigate } from 'react-router'
 import gravatar from 'gravatar'
+import { Route,Routes ,useNavigate} from 'react-router'
+import loadable from '@loadable/component'
+
+const Channel = loadable(()=>import('@pages/Channel'))
+const DirectMessage = loadable(()=>import('@pages/DirectMessage'))
 
 
 const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
@@ -42,7 +45,12 @@ const Workspace : FC<React.PropsWithChildren<{}>>= ({children}) => {
                 menuscroll
             </MenuScroll>
         </Channels>
-        <Chats>chats</Chats>
+        <Chats>
+          <Routes>
+          <Route path="/channel" element={<Channel></Channel>}></Route>
+          <Route path="/dm" element={<DirectMessage></DirectMessage>}></Route>
+          </Routes>
+        </Chats>
     </WorkspaceWrapper>
     {children}
     </div>
