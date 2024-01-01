@@ -4,7 +4,7 @@ import React, { CSSProperties, FC, PropsWithChildren, useCallback } from 'react'
 interface Props {
     show:boolean;
     style:CSSProperties,
-    onCloseModal:(()=>void),
+    onCloseModal:((e:any)=>void),
     closeButton?:boolean
 }
 
