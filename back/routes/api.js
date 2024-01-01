@@ -786,10 +786,12 @@ router.get("/workspaces/:workspace/users/:id", async (req, res, next) => {
 });
 
 router.get("/users", (req, res, next) => {
+  
   return res.json(req.user || false);
 });
 
 router.post("/users", isNotLoggedIn, async (req, res, next) => {
+
   try {
     const exUser = await User.findOne({
       where: {
