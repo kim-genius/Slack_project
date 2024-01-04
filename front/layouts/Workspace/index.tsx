@@ -31,7 +31,7 @@ const Workspace = () => {
             axios.post('http://localhost:3095/api/users/logout',null,{
                 withCredentials:true,
             })
-            .then(()=>{mutate()})
+            .then(()=>{mutate()}) //로그아웃
 
     },[])
     const onClickCreateWorkspace = useCallback(()=>{
