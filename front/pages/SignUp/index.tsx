@@ -61,7 +61,7 @@ const SignUp = () => {
 
 
   if(data){
-    navigate('/')
+    navigate('/workspace/sleact/channel/일반')
 
   }
   return (

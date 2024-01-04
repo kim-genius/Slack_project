@@ -16,8 +16,8 @@ const App = () => {
         <Route path ='/login' element={<Login/>}/>
         <Route path ='/signup' element={<SignUp/>}/>  
         <Route path ='/workspace' element ={<Workspace/>}>
-          <Route path="/workspace/channel" element={<Channel></Channel>}></Route>
-          <Route path="/workspace/dm" element={<DirectMessage></DirectMessage>}></Route>
+          <Route path="/workspace/:workspace/channel/:channel" element={<Channel></Channel>}></Route>
+          <Route path="/workspace/:workspace/dm/:id" element={<DirectMessage></DirectMessage>}></Route>
         </Route>
     </Routes>
     </div>

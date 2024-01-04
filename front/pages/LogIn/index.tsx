@@ -41,7 +41,7 @@ const LogIn = () => {
     return <div>로딩중...</div>
   }
   if(data){
-    navigate('/workspace/channel')
+    navigate('/workspace/sleact/channel/일반')
   }
   // console.log(error, userData);
   // if (!error && userData) {
