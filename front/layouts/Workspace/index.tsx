@@ -17,6 +17,8 @@ import {toast} from 'react-toastify'
 import CreateChannelModal from '@components/CreateChannelModal'
 import InviteWorkspaceModal from '@components/InviteWorkspaceModal'
 import InviteChannelModal from '@components/InviteChannelModal'
+import ChannelList from '@components/ChannelList'
+import DMList from '@components/DMList'
 const Workspace = () => {
   const navigate = useNavigate()
   const [showUserMenu,setShowUserMenu] =useState(false)
@@ -30,11 +32,12 @@ const Workspace = () => {
   const {workspace} = useParams<{workspace:string}>()
   const params = useParams()
   console.log(params)
-    const {data:userData,error,mutate} =  useSWR<IUser> ('http://localhost:3095/api/users',fetcher,{dedupingInterval:2000})
-    const {data:channelData} =  useSWR<IChannel[]> (userData? `http://localhost:3095/api/workspaces/${workspace}/channels`:null,fetcher)
-      console.log(workspace)
+    const {data:userData,error,mutate} =  useSWR<IUser> ('/api/users',fetcher,{dedupingInterval:2000})
+    const {data:channelData} =  useSWR<IChannel[]> (userData? `/api/workspaces/${workspace}/channels`:null,fetcher)
+    const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}`:null,fetcher)
+
     const onLogout = useCallback(()=>{ 
-            axios.post('http://localhost:3095/api/users/logout',null,{
+            axios.post('/api/users/logout',null,{
                 withCredentials:true,
             })
             .then(()=>{mutate()}) //로그아웃
@@ -53,7 +56,7 @@ const onClickCreateWorkspace = useCallback(()=>{
       if (!newUrl || !newUrl.trim()) return;
       axios
         .post(
-          'http://localhost:3095/api/workspaces',
+          '/api/workspaces',
           {
             workspace: newWorkspace,
             url: newUrl,
@@ -138,6 +141,8 @@ const onClickCreateWorkspace = useCallback(()=>{
                   </WorkspaceModal>
 
                 </Menu>
+                <ChannelList></ChannelList>
+                <DMList></DMList>
                 {channelData?.map((res)=><div>{res.name}</div>)}
             </MenuScroll>
         </Channels>

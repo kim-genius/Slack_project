@@ -17,12 +17,12 @@ interface Props {
 const CreateChannelModal :React.FC<Props> = ({show,onCloseModal,setShowCreateChannelModal}) => {
     const [newChannel,onChangeNewChannel,setNewChannel] = useinput('')
     const {workspace,channel} = useParams<{workspace:string,channel:string}>()
-    const {data:userData,error,mutate} =  useSWR<IUser> ('http://localhost:3095/api/users',fetcher,{dedupingInterval:2000})
-    const {data:channelData,mutate:channelMutate} =  useSWR<IChannel[]> (userData? `http://localhost:3095/api/workspaces/${workspace}/channels`:null,fetcher)
+    const {data:userData,error,mutate} =  useSWR<IUser> ('/api/users',fetcher,{dedupingInterval:2000})
+    const {data:channelData,mutate:channelMutate} =  useSWR<IChannel[]> (userData? `/api/workspaces/${workspace}/channels`:null,fetcher)
     
     const onCreateChannel = useCallback((e:any)=>{
       e.preventDefault();
-      axios.post(`http://localhost:3095/api/workspaces/${workspace}/channels`,{
+      axios.post(`/api/workspaces/${workspace}/channels`,{
       name:newChannel,
     },{withCredentials:true})
     .then((res)=>{setShowCreateChannelModal(false);setNewChannel('');channelMutate()})

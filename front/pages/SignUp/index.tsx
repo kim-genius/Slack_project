@@ -8,7 +8,7 @@ import fetcher from '@utils/fetcher';
 import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
   const navigate = useNavigate()
-  const {data,error,mutate} =  useSWR('http://localhost:3095/api/users',fetcher)
+  const {data,error,mutate} =  useSWR('/api/users',fetcher)
   const [email, onChangeEmail,setEmail] = useinput(''); 
   const [nickname, onChangeNickname,setNickname] = useinput('');
   const [password,setPassword] = useState('');
