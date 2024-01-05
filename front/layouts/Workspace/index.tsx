@@ -24,6 +24,8 @@ const Workspace = () => {
   const [newWorkspace,onChangeNewWorkspace,setNewWorkspace] = useinput('')
   const [newUrl,onChangeNewUrl,setNewUrl] = useinput('')
   const {workspace} = useParams<{workspace:string}>()
+  const params = useParams()
+  console.log(params)
     const {data:userData,error,mutate} =  useSWR<IUser> ('http://localhost:3095/api/users',fetcher,{dedupingInterval:2000})
     const {data:channelData} =  useSWR<IChannel[]> (userData? `http://localhost:3095/api/workspaces/${workspace}/channels`:null,fetcher)
       console.log(workspace)
@@ -69,6 +71,10 @@ const Workspace = () => {
     },
     [newWorkspace, newUrl],
   )
+
+  const onClickInviteWorkspace = useCallback(()=>{},[])
+
+  
     const toggleWorkspaceModal = useCallback(()=>{setShowWorkspaceModal((prev)=>!prev)},[])
     const onClickAddChannel = useCallback(()=>{setShowCreateChannelModal(true);},[])
 
@@ -119,7 +125,9 @@ const Workspace = () => {
             <MenuScroll>
                 <Menu show={showWorkspaceModal} onCloseModal ={toggleWorkspaceModal} style={{top:95, left:80}}>
                   <WorkspaceModal>
-                    <h2>Sleact</h2>
+                    
+                    <h2>Sleact</h2> 
+                    <button onClick={onClickInviteWorkspace}>워크스페이스에 사용자 초대</button>
                     <button onClick={onClickAddChannel}>채널 만들기</button>
                     <button onClick={onLogout}>로그아웃</button>
                   </WorkspaceModal>
