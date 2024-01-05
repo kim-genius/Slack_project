@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const CollapseButton = styled.button<{ collapse: boolean }>`
-  background: transparent;
+  background:transparent;
   border: none;
   width: 26px;
   height: 26px;
