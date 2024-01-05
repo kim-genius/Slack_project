@@ -15,12 +15,16 @@ import { Button } from '@pages/SignUp/styles'
 import useinput from '@hooks/useInput'
 import {toast} from 'react-toastify'
 import CreateChannelModal from '@components/CreateChannelModal'
+import InviteWorkspaceModal from '@components/InviteWorkspaceModal'
+import InviteChannelModal from '@components/InviteChannelModal'
 const Workspace = () => {
   const navigate = useNavigate()
   const [showUserMenu,setShowUserMenu] =useState(false)
   const [showWorkspaceModal,setShowWorkspaceModal] =useState(false)
   const [showCreateWorkspaceModal,setShowCreateWorkspaceModal] =useState(false);
   const [showCreateChannelModal,setShowCreateChannelModal] =useState(false);
+  const [showInviteWorkspaceModal,setShowInviteWorkspaceModal] =useState(false);
+  const [showInviteChannelModal,setShowInviteChannelModal] =useState(false);
   const [newWorkspace,onChangeNewWorkspace,setNewWorkspace] = useinput('')
   const [newUrl,onChangeNewUrl,setNewUrl] = useinput('')
   const {workspace} = useParams<{workspace:string}>()
@@ -36,11 +40,11 @@ const Workspace = () => {
             .then(()=>{mutate()}) //로그아웃
 
     },[])
-    const onClickCreateWorkspace = useCallback(()=>{
+const onClickCreateWorkspace = useCallback(()=>{
       setShowCreateWorkspaceModal(true)
   },[])
   const onClickUserProfile = useCallback(()=>{setShowUserMenu((prev)=>!prev)},[])
-  const onCloseModal = useCallback(()=>{setShowCreateWorkspaceModal(false),setShowCreateChannelModal(false)},[])
+  const onCloseModal = useCallback(()=>{setShowCreateWorkspaceModal(false),setShowCreateChannelModal(false),setShowInviteWorkspaceModal(false),setShowInviteChannelModal(false)},[])
   const onCloseUsePorfile = useCallback((e:any)=>{e.stopPropagation(),setShowUserMenu(false)},[])
   const onCreateWorkspace = useCallback(
     (e:any) => {
@@ -72,9 +76,10 @@ const Workspace = () => {
     [newWorkspace, newUrl],
   )
 
-  const onClickInviteWorkspace = useCallback(()=>{},[])
 
-  
+
+
+    const onClickInviteWorkspace = useCallback(()=>{setShowInviteWorkspaceModal((prev)=>!prev)},[])
     const toggleWorkspaceModal = useCallback(()=>{setShowWorkspaceModal((prev)=>!prev)},[])
     const onClickAddChannel = useCallback(()=>{setShowCreateChannelModal(true);},[])
 
@@ -155,6 +160,8 @@ const Workspace = () => {
 
     </Modal>
     <CreateChannelModal show ={showCreateChannelModal} onCloseModal={onCloseModal} setShowCreateChannelModal={setShowCreateChannelModal}></CreateChannelModal>
+    <InviteWorkspaceModal show={showInviteWorkspaceModal} onCloseModal={onCloseModal} setShowInviteWorkspaceModal={setShowInviteWorkspaceModal}></InviteWorkspaceModal>
+    <InviteChannelModal show={showInviteChannelModal} onCloseModal={onCloseModal} setShowInviteChannelModal={setShowInviteChannelModal}></InviteChannelModal>
     </div>
   )
 }
