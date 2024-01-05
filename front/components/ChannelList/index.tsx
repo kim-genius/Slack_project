@@ -38,7 +38,13 @@ const ChannelList: FC = () => {
             return (
               <NavLink
                 key={channel.name}
-                // activeClassName="selected"
+                style={({ isActive, isPending }) =>{
+                    return{
+                        fontWeight: isActive ? "bold" : "",
+                        color:isActive?"white":""  
+                    }
+                  }
+                }
                 to={`/workspace/${workspace}/channel/${channel.name}`}
               >
                 <span># {channel.name}</span>

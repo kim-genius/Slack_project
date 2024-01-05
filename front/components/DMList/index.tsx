@@ -61,7 +61,13 @@ const DMList: FC = () => {
             const isOnline = onlineList.includes(member.id);
             return (
               <NavLink key={member.id} 
-            //   activeClassName="selected" 
+              style={({ isActive, isPending }) =>{
+                return{
+                    fontWeight: isActive ? "bold" : "",
+                    color:isActive?"white":""  
+                }
+              }
+            }
               to={`/workspace/${workspace}/dm/${member.id}`}>
                 <i
                   className={`c-icon p-channel_sidebar__presence_icon p-channel_sidebar__presence_icon--dim_enabled c-presence ${
