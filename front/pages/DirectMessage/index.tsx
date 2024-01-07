@@ -5,9 +5,11 @@ import gravatar from 'gravatar'
 import { Header,DragOver } from './styles'
 import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
+import { useParams } from 'react-router'
 const DirectMessage = () => {
-  
-    const {data:userData} = useSWR('/api/users',fetcher)
+
+  const {workspace,id}=useParams<{workspace:string,id:string}>()
+  const {data:userData} = useSWR(`/api/workspace/${workspace}/members/${id}`,fetcher)
 
   return (
     <Container>
