@@ -10,18 +10,26 @@ import gravatar from 'gravatar';
 
 interface Props {
   chat: string;
-  // onSubmitForm: (e: any) => void;
-  // onChangeChat: (e: any) => void;
+  onSubmitForm: (e: any) => void;
+  onChangeChat: (e: any) => void;
   placeholder?: string;
 }
-const ChatBox: React.FC<Props> = ({ chat
+const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat
 }) => {
   const { workspace } = useParams<{ workspace: string }>();
   const { data: userData, error,  mutate } = useSWR<IUser | false>('/api/users', fetcher, {
     dedupingInterval: 2000, // 2초
   });
   const { data: memberData } = useSWR<IUser[]>(userData ? `/api/workspaces/${workspace}/members` : null, fetcher);
-  const onSubmitForm = useCallback(()=>{},[])
+
+  const onKeydownChat = useCallback((e:any)=>{
+    if(e.key ==='Enter'){
+      if(!e.shiftKey){
+        e.preventDefault()
+        onSubmitForm(e)
+      }
+      
+    }},[])
 //   const textareaRef = useRef<HTMLTextAreaElement>(null);
 // //   useEffect(() => {
 // //     if (textareaRef.current) {
@@ -67,7 +75,7 @@ const ChatBox: React.FC<Props> = ({ chat
     <ChatArea>
       <Form onSubmit={onSubmitForm}>
         <MentionsTextarea>
-          <textarea></textarea>  
+          <textarea value ={chat} onChange={onChangeChat} onKeyDown={onKeydownChat}></textarea>  
         </MentionsTextarea>
         <Toolbox>
           <SendButton
