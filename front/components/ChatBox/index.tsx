@@ -66,22 +66,9 @@ const ChatBox: React.FC<Props> = ({ chat
   return (
     <ChatArea>
       <Form onSubmit={onSubmitForm}>
-        {/* <MentionsTextarea
-          id="editor-chat"
-          value={chat}
-          onChange={onChangeChat}
-          onKeyPress={onKeydownChat}
-          placeholder={placeholder}
-          inputRef={textareaRef}
-          allowSuggestionsAboveCursor
-        >
-          <Mention
-            appendSpaceOnAdd
-            trigger="@"
-            data={memberData?.map((v) => ({ id: v.id, display: v.nickname })) || []}
-            // renderSuggestion={renderSuggestion}
-          />
-        </MentionsTextarea> */}
+        <MentionsTextarea>
+          <textarea></textarea>  
+        </MentionsTextarea>
         <Toolbox>
           <SendButton
             className={
