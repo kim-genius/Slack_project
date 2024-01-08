@@ -44,6 +44,8 @@
 
     "@types/react-mentions": "^4.1.13",
 
+    "autosize": "^6.0.1",
+
     "axios": "^1.6.3",
 
     "cross-env": "^7.0.3",
@@ -81,6 +83,8 @@
     "@babel/preset-react": "^7.23.3",
 
     "@babel/preset-typescript": "^7.23.3",
+
+    "@types/autosize": "^4.0.3",
 
     "@types/node": "^20.10.5",
 
