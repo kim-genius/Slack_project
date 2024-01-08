@@ -129,7 +129,7 @@ const onClickCreateWorkspace = useCallback(()=>{
           <AddButton onClick={onClickCreateWorkspace}>+</AddButton>
           </Workspaces>
         <Channels>
-            <WorkspaceName onClick={toggleWorkspaceModal}>sleact</WorkspaceName>
+            <WorkspaceName onClick={toggleWorkspaceModal}>GeniusChat</WorkspaceName>
             <MenuScroll>
                 <Menu show={showWorkspaceModal} onCloseModal ={toggleWorkspaceModal} style={{top:95, left:80}}>
                   <WorkspaceModal>

@@ -61,7 +61,7 @@ const DMList: FC = () => {
             const isOnline = onlineList.includes(member.id);
             return (
               <NavLink key={member.id} 
-              style={({ isActive, isPending }) =>{
+              style={({ isActive }) =>{
                 return{
                     fontWeight: isActive ? "bold" : "",
                     color:isActive?"white":""  

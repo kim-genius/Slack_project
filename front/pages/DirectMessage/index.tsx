@@ -6,6 +6,7 @@ import { Header,DragOver } from './styles'
 import useSWR from 'swr'
 import fetcher from '@utils/fetcher'
 import { useParams } from 'react-router'
+import ChatBox from '@components/ChatBox'
 const DirectMessage = () => {
 
   const {workspace,id}=useParams<{workspace:string,id:string}>()
@@ -18,8 +19,8 @@ const DirectMessage = () => {
         <img src={gravatar.url(userData.email, { s: '24px', d: 'retro' })} alt={userData.nickname} />
         <span>{userData.nickname}</span>
       </Header>
-      {/* <ChatList></ChatList>
-      <ChatBox></ChatBox> */}
+      {/* <ChatList></ChatList> */}
+      <ChatBox chat='hi'></ChatBox>
       <DragOver>업로드!</DragOver>
     </Container>
      
