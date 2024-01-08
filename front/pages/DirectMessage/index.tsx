@@ -15,7 +15,7 @@ const DirectMessage = () => {
   const {data:userData} = useSWR(`/api/workspaces/${workspace}/users/${id}`,fetcher)
   const {data:myData} = useSWR(`/api/users`,fetcher)
   const [chat,onChangeChat] =useInput('')
-  const onSubmitForm = useCallback(()=>{},[])
+  const onSubmitForm = useCallback((e:any)=>{e.preventDefault();},[])
   if(!userData ||!myData){return null}
   return (
     <Container>

@@ -5,8 +5,8 @@ import ChatBox from '@components/ChatBox'
 import useInput from '@hooks/useInput'
 import ChatList from '@components/ChatList'
 const Channel = () => {
-    const [chat,onChangeChat] = useInput('')
-    const onSubmitForm = useCallback((e:any)=>{e.preventDefault(),console.log('submit')},[])
+    const [chat,onChangeChat,setChat] = useInput('')
+    const onSubmitForm = useCallback((e:any)=>{e.preventDefault(),console.log('submit'),setChat('')},[])
 
   return (
 

@@ -87,9 +87,7 @@ const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat,placeholder
          onKeyPress={onKeydownChat}
          placeholder={placeholder}
          ref={textareaRef}
-     
         >
-          <textarea value ={chat} onChange={onChangeChat} onKeyDown={onKeydownChat}></textarea>  
         </MentionsTextarea>
         <Toolbox>
           <SendButton
