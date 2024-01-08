@@ -8,7 +8,7 @@ const Channel = () => {
     const [chat,onChangeChat,setChat] = useInput('')
     const onSubmitForm = useCallback((e:any)=>{e.preventDefault(),console.log('submit'),setChat('')},[])
 
-  return (
+  return ( 
 
     <Container>
     <Header>

@@ -33,9 +33,10 @@ const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat,placeholder
       if(!e.shiftKey){
         e.preventDefault()
         onSubmitForm(e)
+       
       }
       
-    }},[])
+    }},[onSubmitForm])
 //   const textareaRef = useRef<HTMLTextAreaElement>(null);
 // //   useEffect(() => {
 // //     if (textareaRef.current) {
