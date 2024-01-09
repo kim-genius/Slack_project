@@ -19,6 +19,7 @@ import InviteWorkspaceModal from '@components/InviteWorkspaceModal'
 import InviteChannelModal from '@components/InviteChannelModal'
 import ChannelList from '@components/ChannelList'
 import DMList from '@components/DMList'
+import useSocket from '@hooks/useSocket'
 const Workspace = () => {
   const navigate = useNavigate()
   const [showUserMenu,setShowUserMenu] =useState(false)
@@ -26,16 +27,23 @@ const Workspace = () => {
   const [showCreateWorkspaceModal,setShowCreateWorkspaceModal] =useState(false);
   const [showCreateChannelModal,setShowCreateChannelModal] =useState(false);
   const [showInviteWorkspaceModal,setShowInviteWorkspaceModal] =useState(false);
+  
   const [showInviteChannelModal,setShowInviteChannelModal] =useState(false);
   const [newWorkspace,onChangeNewWorkspace,setNewWorkspace] = useinput('')
   const [newUrl,onChangeNewUrl,setNewUrl] = useinput('')
+ 
   const {workspace} = useParams<{workspace:string}>()
   const params = useParams()
   console.log(params)
     const {data:userData,error,mutate} =  useSWR<IUser> ('/api/users',fetcher,{dedupingInterval:2000})
     const {data:channelData} =  useSWR<IChannel[]> (userData? `/api/workspaces/${workspace}/channels`:null,fetcher)
     const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}`:null,fetcher)
-
+    const [socket,disconnect] = useSocket(workspace)
+    useEffect(()=>{
+      socket.on('message')
+      socket.emit()
+      disconnect()
+    },[])
     const onLogout = useCallback(()=>{ 
             axios.post('/api/users/logout',null,{
                 withCredentials:true,
@@ -78,10 +86,6 @@ const onClickCreateWorkspace = useCallback(()=>{
     },
     [newWorkspace, newUrl],
   )
-
-
-
-
     const onClickInviteWorkspace = useCallback(()=>{setShowInviteWorkspaceModal((prev)=>!prev)},[])
     const toggleWorkspaceModal = useCallback(()=>{setShowWorkspaceModal((prev)=>!prev)},[])
     const onClickAddChannel = useCallback(()=>{setShowCreateChannelModal(true);},[])
