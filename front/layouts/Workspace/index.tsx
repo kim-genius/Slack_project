@@ -40,11 +40,13 @@ const Workspace = () => {
     const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}`:null,fetcher)
     const [socket,disconnect] = useSocket(workspace)
     useEffect(()=>{
+      
         if(channelData && userData && socket){
+          console.log(socket)
           socket.emit(`login`,{id:userData.id,channels:channelData.map((res)=>{res.id})})
         }
     },[socket,channelData,userData])
-    
+
     useEffect(()=>{
       return()=>{
         disconnect()
