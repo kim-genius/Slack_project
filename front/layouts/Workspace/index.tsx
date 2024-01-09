@@ -40,10 +40,18 @@ const Workspace = () => {
     const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}`:null,fetcher)
     const [socket,disconnect] = useSocket(workspace)
     useEffect(()=>{
-      socket.on('message')
-      socket.emit()
-      disconnect()
-    },[])
+        if(channelData && userData && socket){
+          socket.emit(`login`,{id:userData.id,channels:channelData.map((res)=>{res.id})})
+        }
+    },[socket,channelData,userData])
+    
+    useEffect(()=>{
+      return()=>{
+        disconnect()
+      }
+    },[workspace,disconnect])
+
+
     const onLogout = useCallback(()=>{ 
             axios.post('/api/users/logout',null,{
                 withCredentials:true,
