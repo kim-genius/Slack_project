@@ -1,15 +1,17 @@
 // import Chat from '@components/Chat';
+import Chat from '@components/Chat';
 import { ChatZone, Section, StickyHeader } from '@components/ChatList/styles';
 import { IDM, IChat } from '@typings/db';
-import React, { useCallback, forwardRef, RefObject, MutableRefObject } from 'react';
+import React, { FC,useCallback, forwardRef, RefObject, MutableRefObject } from 'react';
 // import { Scrollbars } from 'react-custom-scrollbars';
 
 interface Props {
-  chatSections: { [key: string]: (IDM | IChat)[] };
-  setSize: (f: (size: number) => number) => Promise<(IDM | IChat)[][] | undefined>;
-  isReachingEnd: boolean;
+  // chatSections: { [key: string]: (IDM | IChat)[] };
+  // setSize: (f: (size: number) => number) => Promise<(IDM | IChat)[][] | undefined>;
+  // isReachingEnd: boolean;
+  chatData?:IDM[]
 }
-const ChatList = () => {
+const ChatList:FC<Props> = ({chatData})=> {
 //   const onScroll = useCallback(
 //     (values) => {
 //       if (values.scrollTop === 0 && !isReachingEnd) {
@@ -42,6 +44,9 @@ const ChatList = () => {
           );
         })}
       </Scrollbars> */}
+      {chatData?.map((chat)=>(
+        <Chat key={chat.id} data={chat}></Chat>
+      ))}
     </ChatZone>
   );
 };
