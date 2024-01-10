@@ -64,6 +64,8 @@
 
     "react": "^18.2.0",
 
+    "react-custom-scrollbars": "^4.2.1",
+
     "react-dom": "^18.2.0",
 
     "react-mentions": "^4.4.10",
@@ -99,6 +101,8 @@
     "@types/autosize": "^4.0.3",
 
     "@types/node": "^20.10.5",
+
+    "@types/react-custom-scrollbars": "^4.0.13",
 
     "@types/react-router": "^5.1.20",
 
