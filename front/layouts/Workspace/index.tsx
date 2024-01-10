@@ -37,7 +37,7 @@ const Workspace = () => {
   console.log(params)
     const {data:userData,error,mutate} =  useSWR<IUser> ('/api/users',fetcher,{dedupingInterval:2000})
     const {data:channelData} =  useSWR<IChannel[]> (userData? `/api/workspaces/${workspace}/channels`:null,fetcher)
-    const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}`:null,fetcher)
+    const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}/members`:null,fetcher)
     const [socket,disconnect] = useSocket(workspace)
     useEffect(()=>{
       

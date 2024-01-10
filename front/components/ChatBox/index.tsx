@@ -9,6 +9,7 @@ import useSWR from 'swr';
 import gravatar from 'gravatar';
 import autosize from 'autosize';
 import { text } from 'stream/consumers';
+
 interface Props {
   chat: string;
   onSubmitForm: (e: any) => void;
@@ -26,7 +27,12 @@ const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat,placeholder
   const { data: userData, error,  mutate } = useSWR<IUser | false>('/api/users', fetcher, {
     dedupingInterval: 2000, // 2초
   });
-  const { data: memberData } = useSWR<IUser[]>(userData ? `/api/workspaces/${workspace}/members` : null, fetcher);
+  const {data:memberData} =  useSWR<IUser[]> (userData? `/api/workspaces/${workspace}/members`:null,fetcher)
+  const params = useParams()
+  console.log(memberData,'member',workspace,'workspcae')
+    
+    
+  
 
   const onKeydownChat = useCallback((e:any)=>{
     if(e.key ==='Enter'){
@@ -37,6 +43,26 @@ const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat,placeholder
       }
       
     }},[onSubmitForm])
+
+    const renderSuggestion = useCallback((  
+      suggestion: SuggestionDataItem,
+      search: string,
+      highlightedDisplay: React.ReactNode,
+      index: number,
+      focused: boolean):React.ReactNode=>{
+        if(!memberData){
+          return;
+        } return(
+          <EachMention focus={focused}>
+            <img src={gravatar.url(memberData[index].email,{s:'20px',d:'retro'})} alt={memberData[index].email}></img>
+            <span>{highlightedDisplay}</span>
+          </EachMention>
+        )
+
+        
+      }
+    ,[])
+
 //   const textareaRef = useRef<HTMLTextAreaElement>(null);
 // //   useEffect(() => {
 // //     if (textareaRef.current) {
@@ -87,8 +113,10 @@ const ChatBox: React.FC<Props> = ({ chat,onSubmitForm,onChangeChat,placeholder
          onChange={onChangeChat}
          onKeyPress={onKeydownChat}
          placeholder={placeholder}
-         ref={textareaRef}
+         inputRef={textareaRef}
+         allowSuggestionsAboveCursor
         >
+          <Mention appendSpaceOnAdd trigger='@' data={memberData?.map((data)=>({id:data.id, display:data.nickname}))||[]} renderSuggestion={renderSuggestion}></Mention>
         </MentionsTextarea>
         <Toolbox>
           <SendButton
