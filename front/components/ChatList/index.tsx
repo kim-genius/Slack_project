@@ -12,27 +12,20 @@ interface Props {
   // isReachingEnd: boolean;  add
   chatData?:IDM[]
 }
-const ChatList:FC<Props> = ({chatSections})=> {
-  const  scrollRef = useRef(null)
+const ChatList = forwardRef<Scrollbars,Props>(({chatSections},ref)=> {
+
   const onScroll = useCallback(
     (values:any) => {
-//       if (values.scrollTop === 0 && !isReachingEnd) {
-//         console.log('가장 위');
-//         setSize((prevSize) => prevSize + 1).then(() => {
-//           // 스크롤 위치 유지
-//           const current = (scrollRef as MutableRefObject<Scrollbars>)?.current;
-//           if (current) {
-//             current.scrollTop(current.getScrollHeight() - values.scrollHeight);
-//           }
-//         });
-//       }
+          if(values.scrollTop ===0){
+            console.log('가장 위')
+          }
     },
     [],
   );
 
   return (
     <ChatZone>
-      <Scrollbars autoHide ref={scrollRef} onScrollFrame={onScroll}>
+      <Scrollbars autoHide ref={ref} onScrollFrame={onScroll}>
         {Object.entries(chatSections).map(([date, chats]) => {
           return (
             <Section className={`section-${date}`} key={date}>
@@ -50,6 +43,6 @@ const ChatList:FC<Props> = ({chatSections})=> {
 
     </ChatZone>
   );
-};
+});
 
 export default ChatList;

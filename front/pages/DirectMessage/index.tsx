@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import Workspace from '@layouts/Workspace'
 import { Container } from './styles'
 import gravatar from 'gravatar'
@@ -12,6 +12,7 @@ import useInput from '@hooks/useInput'
 import axios from 'axios'
 import { IDM } from '@typings/db'
 import makeSection from '@utils/makeSection'
+import Scrollbars, { ScrollbarProps } from 'react-custom-scrollbars'
 const DirectMessage = () => {
 
   const {workspace,id}=useParams<{workspace:string,id:string}>()
@@ -20,6 +21,7 @@ const DirectMessage = () => {
   const {data:myData} = useSWR(`/api/users`,fetcher)
   
   const [chat,onChangeChat,setChat] =useInput('')
+  const  scrollRef = useRef<Scrollbars>(null)
   const onSubmitForm = useCallback((e:any)=>{
     e.preventDefault();
     if(chat?.trim()){
@@ -39,7 +41,7 @@ const DirectMessage = () => {
         <img src={gravatar.url(userData.email, { s: '24px', d: 'retro' })} alt={userData.nickname} />
         <span>{userData.nickname}</span>
       </Header>
-      <ChatList chatSections={chatSections}></ChatList>
+      <ChatList chatSections={chatSections} ref ={scrollRef}></ChatList>
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm}></ChatBox>
       {/* <DragOver>업로드!</DragOver> */}
     </Container>
