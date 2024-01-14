@@ -6,12 +6,13 @@ import React, { FC,useCallback, forwardRef, RefObject, MutableRefObject, useRef 
 import { Scrollbars } from 'react-custom-scrollbars';
 
 interface Props {
+  chatSections:{[key:string]:IDM[]}
   // chatSections: { [key: string]: (IDM | IChat)[] };
   // setSize: (f: (size: number) => number) => Promise<(IDM | IChat)[][] | undefined>;
   // isReachingEnd: boolean;  add
   chatData?:IDM[]
 }
-const ChatList:FC<Props> = ({chatData})=> {
+const ChatList:FC<Props> = ({chatSections})=> {
   const  scrollRef = useRef(null)
   const onScroll = useCallback(
     (values:any) => {
@@ -32,7 +33,7 @@ const ChatList:FC<Props> = ({chatData})=> {
   return (
     <ChatZone>
       <Scrollbars autoHide ref={scrollRef} onScrollFrame={onScroll}>
-        {/* {Object.entries(chatSections).map(([date, chats]) => {
+        {Object.entries(chatSections).map(([date, chats]) => {
           return (
             <Section className={`section-${date}`} key={date}>
               <StickyHeader>
@@ -43,10 +44,8 @@ const ChatList:FC<Props> = ({chatData})=> {
               ))}
             </Section>
           );
-        })} */}
-              {chatData?.map((chat)=>(
-        <Chat key={chat.id} data={chat}></Chat>
-      ))}
+        })}
+             
       </Scrollbars>
 
     </ChatZone>
