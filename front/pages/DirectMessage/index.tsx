@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react'
-import Workspace from '@layouts/Workspace'
 import { Container } from './styles'
 import gravatar from 'gravatar'
 import { Header,DragOver } from './styles'
