@@ -8,16 +8,21 @@ import { Scrollbars } from 'react-custom-scrollbars';
 interface Props {
   chatSections:{[key:string]:IDM[]}
   // chatSections: { [key: string]: (IDM | IChat)[] };
-  // setSize: (f: (size: number) => number) => Promise<(IDM | IChat)[][] | undefined>;
-  // isReachingEnd: boolean;  add
+  setSize: (f: (size: number) => number) => Promise<(IDM | IChat)[][] | undefined>;
+  isReachingEnd: boolean; 
   chatData?:IDM[]
+  isEmpty : boolean
 }
-const ChatList = forwardRef<Scrollbars,Props>(({chatSections},ref)=> {
+const ChatList = forwardRef<Scrollbars,Props>(({chatSections,isReachingEnd,isEmpty,setSize},ref)=> {
 
   const onScroll = useCallback(
     (values:any) => {
-          if(values.scrollTop ===0){
+          if(values.scrollTop === 0 && !isReachingEnd ){
             console.log('가장 위')
+            setSize((prevSize:number)=>prevSize +1)
+            .then(()=>{
+              
+            })
           }
     },
     [],
