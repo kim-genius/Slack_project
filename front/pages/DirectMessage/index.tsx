@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Container } from './styles'
 import gravatar from 'gravatar'
 import { Header,DragOver } from './styles'
@@ -30,11 +30,14 @@ const DirectMessage = () => {
     if(chat?.trim()){
    
       axios.post(`/api/workspaces/${workspace}/dms/${id}/chats`,{content:chat})
-      .then((res:any)=>{setChat(''),mutateChat()})
+      .then((res:any)=>{setChat(''),mutateChat(),scrollRef.current?.scrollToBottom()})
       .catch(console.error)
     }
   
   },[chat])
+//로딩 시 스크롤 바 제일 아래로
+  useEffect(()=>{if(chatData?.length === 1){scrollRef.current?.scrollToBottom()}},[chatData])
+
   if(!userData ||!myData){return null}
 
   const chatSections = makeSection(chatData? chatData.flat().reverse():[])
