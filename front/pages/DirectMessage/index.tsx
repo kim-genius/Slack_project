@@ -40,7 +40,7 @@ const DirectMessage = () => {
           createdAt:new Date(),
         })  
         return prevChatData;
-      })
+      },false)
    
       axios.post(`/api/workspaces/${workspace}/dms/${id}/chats`,{content:chat})
       .then((res:any)=>{setChat(''),mutateChat(),scrollRef.current?.scrollToBottom()})
