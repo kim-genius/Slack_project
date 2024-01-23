@@ -41,13 +41,18 @@ const DirectMessage = () => {
         })  
         return prevChatData;
       },false)
+      .then(()=>{
+        setChat(''),
+         scrollRef.current?.scrollToBottom()
+
+      })
    
       axios.post(`/api/workspaces/${workspace}/dms/${id}/chats`,{content:chat})
-      .then((res:any)=>{setChat(''),mutateChat(),scrollRef.current?.scrollToBottom()})
+      .then((res:any)=>{setChat(''),mutateChat()})
       .catch(console.error)
     }
   
-  },[chat])
+  },[chat,chatData,myData,userData,workspace,id])
 //로딩 시 스크롤 바 제일 아래로
   useEffect(()=>{if(chatData?.length === 1){scrollRef.current?.scrollToBottom()}},[chatData])
 
@@ -62,7 +67,7 @@ const DirectMessage = () => {
       </Header>
       <ChatList 
       chatSections={chatSections} 
-      ref ={scrollRef} setSize={setSize} isEmpty={isEmpty} isReachingEnd={isReachingEnd}></ChatList>
+      ref ={scrollRef} setSize={setSize} isReachingEnd={isReachingEnd}></ChatList>
       <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm}></ChatBox>
       {/* <DragOver>업로드!</DragOver> */}
     </Container>
