@@ -13,14 +13,16 @@ import axios from 'axios'
 import { IDM } from '@typings/db'
 import makeSection from '@utils/makeSection'
 import Scrollbars, { ScrollbarProps } from 'react-custom-scrollbars'
-const DirectMessage = () => {
 
+import useSocket from '@hooks/useSocket';
+const DirectMessage = () => {
+  
   const {workspace,id}=useParams<{workspace:string,id:string}>()
   const {data:userData} = useSWR(`/api/workspaces/${workspace}/users/${id}`,fetcher)
   const {data:chatData,mutate:mutateChat,setSize} = useSWRInfinite<IDM[]>((index)=>`/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=${index + 1}`,fetcher)
   const isEmpty = chatData?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
-  
+  const [socket] = useSocket(workspace)
   const {data:myData} = useSWR(`/api/users`,fetcher)
   
   const [chat,onChangeChat,setChat] =useInput('')
@@ -53,6 +55,34 @@ const DirectMessage = () => {
     }
   
   },[chat,chatData,myData,userData,workspace,id])
+
+  const onMessage = useCallback((data:IDM)=>{
+    if (data.SenderId === Number(id) && myData.id !== Number(id)) {
+      mutateChat((chatData) => {
+        chatData?.[0].unshift(data);
+        return chatData;
+      }, false).then(() => {
+        if (scrollRef.current) {
+          if (
+            scrollRef.current.getScrollHeight() <
+            scrollRef.current.getClientHeight() + scrollRef.current.getScrollTop() + 150
+          ) {
+            console.log('scrollToBottom!', scrollRef.current?.getValues());
+            setTimeout(() => {
+              scrollRef.current?.scrollToBottom();
+            }, 50);
+          }
+        }
+      });
+    }
+  },[])
+  useEffect(()=>{
+      socket?.on('dm',onMessage)
+      return()=>{
+        socket?.off('dm',onMessage)
+      }
+
+  },[socket,id,myData])
 //로딩 시 스크롤 바 제일 아래로
   useEffect(()=>{if(chatData?.length === 1){scrollRef.current?.scrollToBottom()}},[chatData])
 
