@@ -7,13 +7,13 @@ import regexifyString from 'regexify-string';
 import { Link, useParams } from 'react-router-dom';
 
 interface Props {
-  data: IDM ;
+  data: IDM|IChat ;
 }
 
 const BACK_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3095' : 'https://sleact.nodebird.com';
 const Chat: FC<Props> = ({ data }) => {
   const { workspace } = useParams<{ workspace: string; channel: string }>();
-  const user = data.Sender
+  const user = 'Sender' in data ? data.Sender:data.User;
 
   const result = useMemo(
     () =>
