@@ -20,14 +20,14 @@ const Channel = () => {
   const [showInviteChannelModal,setShowInviteChannelModal] = useState(false)
 
   const {workspace,channel}=useParams<{workspace:string,channel:string}>()
-  const {data:userData} = useSWR(`/api/workspaces/${workspace}/users/${channel}`,fetcher)
-  const {data:chatData,mutate:mutateChat,setSize} = useSWRInfinite<IChat[]>((index)=>`/api/workspaces/${workspace}/dms/${channel}/chats?perPage=20&page=${index + 1}`,fetcher)
+  
+  const {data:chatData,mutate:mutateChat,setSize} = useSWRInfinite<IChat[]>((index)=>`/api/workspaces/${workspace}/channels/${channel}/chats?perPage=20&page=${index + 1}`,fetcher)
   const isEmpty = chatData?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (chatData && chatData[chatData.length - 1]?.length < 20) || false;
   const [socket] = useSocket(workspace)
   const {data:myData} = useSWR(`/api/users`,fetcher)
   const {data:channelMembersData} = useSWR<IUser[]>(myData? `/api/workspaces/${workspace}/channels/${channel}/members`:null,fetcher)
-  const {data:channelData} = useSWR<IChannel>(`api/workspaces/${workspace}/channels/${channel}`,fetcher)
+  const {data:channelData} = useSWR<IChannel>(`/api/workspaces/${workspace}/channels/${channel}`,fetcher)
   const [chat,onChangeChat,setChat] =useInput('')
   const  scrollRef = useRef<Scrollbars>(null)
 
@@ -58,7 +58,7 @@ const Channel = () => {
       .catch(console.error)
     }
    
-  },[chat,chatData,myData,userData,workspace,channel])
+  },[chat,chatData,myData,workspace,channel])
 
   const onMessage = useCallback((data:IChat)=>{
     if (data.Channel.name === channel && data.UserId  !== myData?.UserId) {
@@ -97,7 +97,7 @@ const Channel = () => {
   },[])
 
 
-  if(!userData ||!myData){return null}
+  if(!myData ||!myData){return null}
 
   const chatSections = makeSection(chatData? chatData.flat().reverse():[])
 
